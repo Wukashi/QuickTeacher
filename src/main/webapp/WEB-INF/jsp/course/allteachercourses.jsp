@@ -6,8 +6,8 @@ Wybierz przedmiot z którego prowadzisz zajęcia:<br/>
     Nie prowadzisz żadnych zajęć<br/>
 </c:if>
 <c:if test="${teacherCourses.size() != 0}">
-    <c:forEach var = "course" items="teacherCourses">
-        <c:out value = "${teacherCourses.name}"/><br/>
+    <c:forEach items="${teacherCourses}" var="course">
+        <a href="/logged/currentcourse/${course.id}">${course.name}</a><br/>
     </c:forEach>
 </c:if>
 <br/>

@@ -68,7 +68,8 @@ public class TeacherController {
         Teacher teacher = (Teacher) request.getSession().getAttribute("loggedTeacher");
         List<Course> courses = teacher.getCourses();
         courses.add(courseRepository.getById(id));
-        teacherRepository.updateCurrentTeacherCourses(courses, id);
+        teacher.setCourses(courses);
+        teacherRepository.save(teacher);
         return "redirect:/logged/mycourses";
     }
 }
