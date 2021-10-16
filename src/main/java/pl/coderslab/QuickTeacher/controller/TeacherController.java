@@ -10,6 +10,7 @@ import pl.coderslab.QuickTeacher.repository.CourseRepository;
 import pl.coderslab.QuickTeacher.repository.TeacherRepository;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -23,9 +24,12 @@ public class TeacherController {
         this.courseRepository = courseRepository;
     }
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request)
+    public String logout(HttpSession session)
     {
-        request.getSession().removeAttribute("loggedTeacher");
+        session.removeAttribute("loggedTeacher");
+        session.removeAttribute("currentCourse");
+        session.removeAttribute("currentGroup");
+
         return "redirect:";
     }
 
@@ -42,10 +46,10 @@ public class TeacherController {
             if(teachers.get(i).getFirstName().equals(name)&&teachers.get(i).getLastName().equals(lastName) && teachers.get(i).getPass().equals(pass))
             {
                 request.getSession().setAttribute("loggedTeacher", teachers.get(i));
-                break;
+                return "redirect:/logged";
             }
         }
-        return "redirect:";
+        return "redirect:/login";
     }
 
     @GetMapping("/register")
@@ -63,7 +67,7 @@ public class TeacherController {
         return "redirect:/login";
     }
     @GetMapping("/logged/addcourse/{id}")
-    private String addCourse(@PathVariable Long id, HttpServletRequest request)
+    public String addCourse(@PathVariable Long id, HttpServletRequest request)
     {
         Teacher teacher = (Teacher) request.getSession().getAttribute("loggedTeacher");
         List<Course> courses = teacher.getCourses();

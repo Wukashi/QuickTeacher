@@ -14,6 +14,7 @@ import pl.coderslab.QuickTeacher.repository.CourseRepository;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/logged")
@@ -24,28 +25,35 @@ public class CourseController {
         this.courseRepository = courseRepository;
     }
 
+    @GetMapping("/allcourses")
+    public String showAllCourses(Model model)
+    {
+        model.addAttribute("courses", courseRepository.findAll());
+        return "course/all";
+    }
+
     @RequestMapping("/mycourses")
-    private String showAllYourCourses(HttpServletRequest request, Model model)
+    public String showAllYourCourses(HttpServletRequest request, Model model)
     {
         Teacher teacher = (Teacher) request.getSession().getAttribute("loggedTeacher");
         model.addAttribute("teacherCourses", teacher.getCourses());
         return "course/allteachercourses";
     }
-    @RequestMapping("/avilablecourses")
-    public String showAvilablecourses(Model model)
+    public @RequestMapping("/avilablecourses")
+    String showAvilablecourses(Model model)
     {
         List<Course> courseList = courseRepository.findAll();
-        model.addAttribute("avilablecourses", courseList);
+        model.addAttribute("avilableCourses", courseList);
         return "course/avilable";
     }
     @GetMapping("/addcourse")
-    private String prepareAddCourse(Model model)
+    public String prepareAddCourse(Model model)
     {
         model.addAttribute("course", new Course());
         return "course/add";
     }
     @PostMapping("/addcourse")
-    private String addCourse(@Valid Course course, BindingResult result)
+    public String addCourse(@Valid Course course, BindingResult result)
     {
         if(result.hasErrors())
             return "teacher/register";
@@ -53,8 +61,11 @@ public class CourseController {
         return "redirect:/logged/avilablecourses";
     }
     @RequestMapping("/currentcourse/{id}")
-    private String chooseCurrentCourse(@PathVariable Long id, HttpServletRequest request)
+    public String chooseCurrentCourse(@PathVariable Long id, HttpServletRequest request)
     {
-        return "redirect:";
+        Optional<Course> optionalCourse = courseRepository.findById(id);
+        optionalCourse.ifPresent(course -> request.getSession().setAttribute("currentCourse", course));
+        //wynullować currentGroup
+        return "redirect:/logged";
     }
 }
