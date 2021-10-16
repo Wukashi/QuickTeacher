@@ -16,8 +16,8 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
 @RequestMapping("/logged")
+@Controller
 public class CourseController {
     private final CourseRepository courseRepository;
 
