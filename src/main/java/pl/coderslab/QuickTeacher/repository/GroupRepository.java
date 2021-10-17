@@ -11,4 +11,5 @@ import java.util.List;
 
 public interface GroupRepository extends JpaRepository<Group, Long> {
     List<Group> findByTeachersAndCourses(Teacher teacher, Course course);
+    List<Group> findByCourses(Course course);
 }

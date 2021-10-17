@@ -13,6 +13,7 @@ import pl.coderslab.QuickTeacher.repository.CourseRepository;
 import pl.coderslab.QuickTeacher.repository.GroupRepository;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -42,13 +43,13 @@ public class GroupController {
         model.addAttribute("allGroups", allGroups);
         return "group/all";
     }
-    @GetMapping("/addgroup")
+    @GetMapping("/creategroup")
     String prepareGroup(Model model)
     {
         model.addAttribute("group", new Group());
         return "group/add";
     }
-    @PostMapping("/addgroup")
+    @PostMapping("/creategroup")
     String addGroup(@Valid Group group, BindingResult result)
     {
         if(result.hasErrors())
@@ -57,20 +58,37 @@ public class GroupController {
         return "redirect:/logged/allgroups";
     }
     @RequestMapping("/groupstobook")
-    String chooseAvilableGroup(HttpServletRequest request, Model model)
+    String bookAvilableGroup(HttpServletRequest request, Model model)
     {
         List<Group> groups = groupRepository.findAll();
         Course course = (Course) request.getSession().getAttribute("currentcourse");
         for (int i = groups.size() - 1; i >= 0; i--) {
             for (int j = 0; j < groups.get(i).getCourses().size(); j++) {
-                if(groups.get(i).getCourses().get(j) == course)
+                if(groups.get(i).getCourses().get(j).equals(course))
                 {
                     groups.remove(i);
                     break;
                 }
             }
         }
-        model.addAttribute("avilablegroups", groups);
-        return "group/avilable";
+        model.addAttribute("avilableGroups", groups);
+        return "group/add";
     }
+    @RequestMapping("/showgroupstochoose")
+    public String chooseGroupToTeach(HttpSession session, Model model)
+    {
+        Course course = (Course) session.getAttribute("currentCourse");
+        if(course == null)
+            return "redirect:/logged";
+        List<Group> groups = groupRepository.findByCourses(course);
+        model.addAttribute("avilableGroups", groups);
+        return "group/choose";
+    }
+    @RequestMapping("/grouptochoose")
+    public String chooseCurrentGroupToTeach(HttpSession session, Model model)
+    {
+
+        return "group/choose";
+    }
+
 }

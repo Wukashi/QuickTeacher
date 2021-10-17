@@ -52,7 +52,7 @@
         <nav id="navbar" class="navbar">
             <ul>
                 <li><a class="nav-link scrollto" href="/logged/allcourses">Przedmioty</a></li>
-                <li><a class="nav-link scrollto" href="/logged/allgroups">Klasy</a></li>
+                <li><a class="nav-link scrollto" href="/logged/showgroupstochoose">Klasy</a></li>
                 <li><a class="nav-link scrollto" href="/logged/allstudents">Uczniowie</a></li>
                 <li><a class="getstarted scrollto" href="/logout">Wyloguj</a></li>
             </ul>
@@ -68,13 +68,18 @@
     <section class="breadcrumbs">
         <div class="container">
             <h2>Zarządzaj swoimi uczniami</h2>
-            <ol>
-                <li><a href="/logged/allcourses">Wybierz przedmiot</a></li>
-                <li><a href="/logged/allgroups">Wybierz klasę</a></li>
-                <li><a href="/logged/allstudents">Wybierz ucznia</a></li>
-            </ol>
-
-
+            <c:if test="${empty currentCourse}">
+                <ol>
+                    <li><a href="/logged/coursestochoose">Wybierz przedmiot</a></li>
+                    <li><a href="/logged">Wybierz klasę</a></li>
+                    <li><a href="/logged">Wybierz ucznia</a></li>
+                </ol>
+            </c:if>
+            <c:if test="${empty currentGroup && not empty currentCourse}">
+                <li><a href="/logged/coursestochoose">Wybierz przedmiot</a></li>
+                <li><a href="/logged/grouptochoose">Wybierz klasę</a></li>
+                <li><a href="/logged">Wybierz ucznia</a></li>
+            </c:if>
         </div>
     </section><!-- End Breadcrumbs -->
 
@@ -87,7 +92,7 @@
                     <div class="container" data-aos="fade-up">
 
                         <header class="section-header">
-                            <p>Wybierz Przedmiot</p>
+                            <p>Twoje przedmioty</p>
                         </header>
 
                         <div class="row">
@@ -95,17 +100,16 @@
                             <div class="col-lg-6 mt-5 mt-lg-0 d-flex">
                                 <div class="row align-self-center gy-4">
                                     <c:if test="${teacherCourses.size() == 0}">
-                                        Nie prowadzisz jeszcze żadnych kursów coś tam coś tam
+                                        Nie prowadzisz jeszcze żadnych kursów
                                         <a href="/logged/avilablecourses">Dodaj Przedmiot</a>
                                     </c:if>
                                     <c:if test="${teacherCourses.size() != 0}">
                                         <c:forEach var = "course" items="${teacherCourses}">
                                             <div class="col-md-6" data-aos="zoom-out" data-aos-delay="700">
                                                 <div class="feature-box d-flex align-items-center">
-                                                    <a href="/logged/currentcourse/${course.id}">
+                                                    <a href="/logged/choosecurrentcourse/${course.id}">
                                                         <h3>${course.name}</h3>
-                                                    </a></li>
-
+                                                    </a>
                                                 </div>
                                             </div>
                                         </c:forEach>
@@ -129,21 +133,21 @@
 
                                     <div class="col-lg-6 mt-5 mt-lg-0 d-flex">
                                         <div class="row align-self-center gy-4">
-                                            <c:if test="${groups.size() == 0}">
+                                            <c:if test="${courseGroups.size() == 0}">
                                                 Nie prowadzisz przedmiotu ${currentCourse.name} w żadnej klasie
-                                                <a href="/logged/groupstobook">Dodaj Klasę</a>
+                                                <a href="/logged/groupstobook">Dodaj klasę do przedmiotu</a>
                                             </c:if>
-                                            <c:if test="${groups.size() != 0}">
-                                                <c:forEach var = "group" items="${groups}">
+                                            <c:if test="${courseGroups.size() != 0}">
+                                                <c:forEach var = "group" items="${courseGroups}">
                                                     <div class="col-md-6" data-aos="zoom-out" data-aos-delay="700">
                                                         <div class="feature-box d-flex align-items-center">
-                                                            <a href="/logged/currentcourse/${group.id}">
+                                                            <a href="/logged/currentgroup/${group.id}">
                                                                 <h3>${group.name}</h3>
                                                             </a></li>
                                                         </div>
                                                     </div>
                                                 </c:forEach>
-                                                <a href="/logged/groupstobook">Dodaj Klasę</a>
+                                                <a href="/logged/groupstobook">Dodaj klasę do przedmiotu</a>
                                             </c:if>
                                         </div>
                                     </div>
@@ -156,62 +160,6 @@
 
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
-
-    <div class="footer-top">
-        <div class="container">
-            <div class="row gy-4">
-                <div class="col-lg-5 col-md-12 footer-info">
-                    <a href="index.html" class="logo d-flex align-items-center">
-                        <img src="../../assets/img/logo.png" alt="">
-                        <span>FlexStart</span>
-                    </a>
-                    <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
-                    <div class="social-links mt-3">
-                        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-                        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-6 footer-links">
-                    <h4>Useful Links</h4>
-                    <ul>
-                        <li><i class="bi bi-chevron-right"></i> <a href="#">Home</a></li>
-                        <li><i class="bi bi-chevron-right"></i> <a href="#">About us</a></li>
-                        <li><i class="bi bi-chevron-right"></i> <a href="#">Services</a></li>
-                        <li><i class="bi bi-chevron-right"></i> <a href="#">Terms of service</a></li>
-                        <li><i class="bi bi-chevron-right"></i> <a href="#">Privacy policy</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-2 col-6 footer-links">
-                    <h4>Our Services</h4>
-                    <ul>
-                        <li><i class="bi bi-chevron-right"></i> <a href="#">Web Design</a></li>
-                        <li><i class="bi bi-chevron-right"></i> <a href="#">Web Development</a></li>
-                        <li><i class="bi bi-chevron-right"></i> <a href="#">Product Management</a></li>
-                        <li><i class="bi bi-chevron-right"></i> <a href="#">Marketing</a></li>
-                        <li><i class="bi bi-chevron-right"></i> <a href="#">Graphic Design</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-                    <h4>Contact Us</h4>
-                    <p>
-                        A108 Adam Street <br>
-                        New York, NY 535022<br>
-                        United States <br><br>
-                        <strong>Phone:</strong> +1 5589 55488 55<br>
-                        <strong>Email:</strong> info@example.com<br>
-                    </p>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-
     <div class="container">
         <div class="copyright">
             &copy; Copyright <strong><span>FlexStart</span></strong>. All Rights Reserved

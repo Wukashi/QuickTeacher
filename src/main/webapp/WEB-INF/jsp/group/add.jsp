@@ -44,7 +44,7 @@
 <header id="header" class="header fixed-top">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-        <a href="/" class="logo d-flex align-items-center">
+        <a href="/logged" class="logo d-flex align-items-center">
             <img src="../../assets/img/logo.png" alt="">
             <span>${loggedTeacher.firstName}</span>
         </a>
@@ -73,26 +73,26 @@
                 <div class="container" data-aos="fade-up">
 
                     <header class="section-header">
-                        <p>Lista wszystkich przedmiotów</p>
+                        <p>Dodaj klasę do przedmiotu ${currentCourse.name}</p>
                     </header>
 
                     <div class="row">
 
                         <div class="col-lg-6 mt-5 mt-lg-0 d-flex">
                             <div class="row align-self-center gy-4">
-                                <c:if test="${courses.size() == 0}">
-                                    Nie ma jeszcze żadnych przedmiotów<br>
-                                    <a href="/logged/createcourse">Stwórz nowy przedmiot</a>
+                                <c:if test="${avilableGroups.size() == 0}">
+                                    Brak klas do dodania do przedmiotu ${currentCourse.name}<br>
+                                    <a href="/logged">Stwórz nową klasę</a>
                                 </c:if>
-                                <c:if test="${courses.size() != 0}">
-                                    <c:forEach var = "course" items="${courses}">
+                                <c:if test="${avilableGroups.size() != 0}">
+                                    <c:forEach var = "group" items="${avilableGroups}">
                                         <div class="col-md-6" data-aos="zoom-out" data-aos-delay="700">
-                                            <div class="feature-box d-flex align-items-center">
-                                                <h3>${course.name}</h3>
-                                            </div>
+                                            <a href="/logged/addgrouptocourse/${group.id}">
+                                                <h3>${group.name}</h3>
+                                            </a>
                                         </div>
                                     </c:forEach>
-                                    <a href="/logged/createcourse">Stwórz nowy przedmiot</a>
+                                    <a href="/logged">Stwórz nową klasę</a>
                                 </c:if>
                             </div>
                         </div>

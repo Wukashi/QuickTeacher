@@ -91,6 +91,7 @@
                     </div>
                 </div>
             </div>
+        </div>
 </section><!-- End Hero -->
 
 <jsp:include page="footer.jsp"/>

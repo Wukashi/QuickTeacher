@@ -73,30 +73,20 @@
                 <div class="container" data-aos="fade-up">
 
                     <header class="section-header">
-                        <p>Lista wszystkich przedmiotów</p>
+                        <p>Stwórz nowy przedmiot</p>
                     </header>
 
-                    <div class="row">
+                    <div class="container">
 
-                        <div class="col-lg-6 mt-5 mt-lg-0 d-flex">
-                            <div class="row align-self-center gy-4">
-                                <c:if test="${courses.size() == 0}">
-                                    Nie ma jeszcze żadnych przedmiotów<br>
-                                    <a href="/logged/createcourse">Stwórz nowy przedmiot</a>
-                                </c:if>
-                                <c:if test="${courses.size() != 0}">
-                                    <c:forEach var = "course" items="${courses}">
-                                        <div class="col-md-6" data-aos="zoom-out" data-aos-delay="700">
-                                            <div class="feature-box d-flex align-items-center">
-                                                <h3>${course.name}</h3>
-                                            </div>
-                                        </div>
-                                    </c:forEach>
-                                    <a href="/logged/createcourse">Stwórz nowy przedmiot</a>
-                                </c:if>
+                        <form:form class="padding-small text-center" method="post" modelAttribute="course">
+                            <h1 class="text-color-darker">Tworzenie nowego kursu</h1>
+                            <div class="form-group">
+                                <form:input class="form-control" path="name" placeholder="Podaj nazwę kursu"/>
+                                <form:errors path="name"/> <br />
                             </div>
-                        </div>
-                    </div> <!-- / row -->
+                            <button class="btn btn-color rounded-0" type="submit">Dodaj</button>
+                        </form:form>
+                    </div>
 
                 </div>
             </section>

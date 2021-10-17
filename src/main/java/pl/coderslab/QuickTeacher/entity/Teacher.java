@@ -21,8 +21,8 @@ public class Teacher {
     @Size(min = 5)
     private String pass;
 
-    @ManyToMany
-    private List<Group> groups;
+    @OneToOne
+    private Group group;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Course> courses;
@@ -63,12 +63,12 @@ public class Teacher {
         return this;
     }
 
-    public List<Group> getGroups() {
-        return groups;
+    public Group getGroup() {
+        return group;
     }
 
-    public Teacher setGroups(List<Group> groups) {
-        this.groups = groups;
+    public Teacher setGroup(Group group) {
+        this.group = group;
         return this;
     }
 

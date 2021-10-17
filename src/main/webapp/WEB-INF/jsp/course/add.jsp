@@ -44,7 +44,7 @@
 <header id="header" class="header fixed-top">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-        <a href="/" class="logo d-flex align-items-center">
+        <a href="/logged" class="logo d-flex align-items-center">
             <img src="../../assets/img/logo.png" alt="">
             <span>${loggedTeacher.firstName}</span>
         </a>
@@ -73,23 +73,23 @@
                 <div class="container" data-aos="fade-up">
 
                     <header class="section-header">
-                        <p>Lista wszystkich przedmiotów</p>
+                        <p>Wybierz przedmiot, który chcesz poprowadzić</p>
                     </header>
 
                     <div class="row">
 
                         <div class="col-lg-6 mt-5 mt-lg-0 d-flex">
                             <div class="row align-self-center gy-4">
-                                <c:if test="${courses.size() == 0}">
-                                    Nie ma jeszcze żadnych przedmiotów<br>
+                                <c:if test="${avilableCourses.size() == 0}">
+                                    Brak przedmiotów, które możesz poprowadzić<br>
                                     <a href="/logged/createcourse">Stwórz nowy przedmiot</a>
                                 </c:if>
-                                <c:if test="${courses.size() != 0}">
-                                    <c:forEach var = "course" items="${courses}">
+                                <c:if test="${avilableCourses.size() != 0}">
+                                    <c:forEach var = "course" items="${avilableCourses}">
                                         <div class="col-md-6" data-aos="zoom-out" data-aos-delay="700">
-                                            <div class="feature-box d-flex align-items-center">
+                                            <a href="/logged/addcourse/${course.id}">
                                                 <h3>${course.name}</h3>
-                                            </div>
+                                            </a>
                                         </div>
                                     </c:forEach>
                                     <a href="/logged/createcourse">Stwórz nowy przedmiot</a>

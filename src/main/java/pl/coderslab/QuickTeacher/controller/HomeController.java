@@ -13,12 +13,6 @@ import java.util.List;
 
 @Controller
 public class HomeController {
-	private final GroupRepository groupRepository;
-
-	public HomeController(GroupRepository groupRepository) {
-		this.groupRepository = groupRepository;
-	}
-
 	@RequestMapping("")
 	public String greeting(HttpSession session, Model model) {
 		Teacher teacher = (Teacher) session.getAttribute("loggedTeacher");
@@ -43,9 +37,11 @@ public class HomeController {
 		Teacher teacher = (Teacher) session.getAttribute("loggedTeacher");
 		model.addAttribute("teacherCourses", teacher.getCourses());
 		Course course = (Course) session.getAttribute("currentCourse");
-		model.addAttribute("currentCourse", course);
-		List<Group> teachersCourseGroups = groupRepository.findByTeachersAndCourses(teacher, course);
-		model.addAttribute("groups", teachersCourseGroups);
+		if(course != null)
+		{
+			model.addAttribute("currentCourse", course);
+			model.addAttribute("courseGroups", course.getGroups());
+		}
 		return "logged";
 	}
 }

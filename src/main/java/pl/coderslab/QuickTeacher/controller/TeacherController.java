@@ -74,6 +74,6 @@ public class TeacherController {
         courses.add(courseRepository.getById(id));
         teacher.setCourses(courses);
         teacherRepository.save(teacher);
-        return "redirect:/logged/mycourses";
+        return "redirect:/logged";
     }
 }

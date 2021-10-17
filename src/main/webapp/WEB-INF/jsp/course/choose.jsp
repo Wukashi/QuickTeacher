@@ -73,26 +73,28 @@
                 <div class="container" data-aos="fade-up">
 
                     <header class="section-header">
-                        <p>Lista wszystkich przedmiotów</p>
+                        <p>Wybierz przedmiot</p>
                     </header>
 
                     <div class="row">
 
                         <div class="col-lg-6 mt-5 mt-lg-0 d-flex">
                             <div class="row align-self-center gy-4">
-                                <c:if test="${courses.size() == 0}">
-                                    Nie ma jeszcze żadnych przedmiotów<br>
-                                    <a href="/logged/createcourse">Stwórz nowy przedmiot</a>
+                                <c:if test="${teacherCourses.size() == 0}">
+                                    Nie prowadzisz jeszcze żadnych przedmiotów
+                                    <a href="/logged/avilablecourses">Dodaj Przedmiot</a>
                                 </c:if>
-                                <c:if test="${courses.size() != 0}">
-                                    <c:forEach var = "course" items="${courses}">
+                                <c:if test="${teacherCourses.size() != 0}">
+                                    <c:forEach var = "course" items="${teacherCourses}">
                                         <div class="col-md-6" data-aos="zoom-out" data-aos-delay="700">
                                             <div class="feature-box d-flex align-items-center">
-                                                <h3>${course.name}</h3>
+                                                <a href="/logged/choosecurrentcourse/${course.id}">
+                                                    <h3>${course.name}</h3>
+                                                </a>
                                             </div>
                                         </div>
                                     </c:forEach>
-                                    <a href="/logged/createcourse">Stwórz nowy przedmiot</a>
+                                    <a href="/logged/avilablecourses">Dodaj Przedmiot</a>
                                 </c:if>
                             </div>
                         </div>
