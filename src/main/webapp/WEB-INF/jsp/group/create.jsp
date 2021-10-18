@@ -73,32 +73,20 @@
                 <div class="container" data-aos="fade-up">
 
                     <header class="section-header">
-                        <p>Wybierz klasę</p>
+                        <p>Stwórz nową klasę</p>
                     </header>
 
-                    <div class="row">
+                    <div class="container">
 
-                        <div class="col-lg-6 mt-5 mt-lg-0 d-flex">
-                            <div class="row align-self-center gy-4">
-                                <c:if test="${courseGroups.size() == 0}">
-                                    Przedmiot ${currentCourse.name} nie jest prowadzony w żadnej klasie
-                                    <a href="/logged/groupstobook">Dodaj klasę do przedmiotu</a>
-                                </c:if>
-                                <c:if test="${courseGroups.size() != 0}">
-                                    <c:forEach var = "group" items="${courseGroups}">
-                                        <div class="col-md-6" data-aos="zoom-out" data-aos-delay="700">
-                                            <div class="feature-box d-flex align-items-center">
-                                                <a href="/logged/currentgroup/${group.id}">
-                                                    <h3>${group.name}</h3>
-                                                </a></li>
-                                            </div>
-                                        </div>
-                                    </c:forEach>
-                                    <a href="/logged/groupstobook">Dodaj klasę do przedmiotu</a>
-                                </c:if>
+                        <form:form class="padding-small text-center" method="post" modelAttribute="group">
+                            <h1 class="text-color-darker">Tworzenie nowej klasy</h1>
+                            <div class="form-group">
+                                <form:input class="form-control" path="name" placeholder="Podaj nazwę klasy"/>
+                                <form:errors path="name"/> <br />
                             </div>
-                        </div>
-                    </div> <!-- / row -->
+                            <button class="btn btn-color rounded-0" type="submit">Stwórz</button>
+                        </form:form>
+                    </div>
 
                 </div>
             </section>

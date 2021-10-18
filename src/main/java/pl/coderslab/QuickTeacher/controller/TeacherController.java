@@ -30,7 +30,7 @@ public class TeacherController {
         session.removeAttribute("currentCourse");
         session.removeAttribute("currentGroup");
 
-        return "redirect:";
+        return "redirect:/";
     }
 
     @GetMapping("/login")
@@ -42,10 +42,9 @@ public class TeacherController {
     public String login(HttpServletRequest request, @RequestParam("name") String name, @RequestParam("lastName") String lastName, @RequestParam("pass") String pass)
     {
         List<Teacher> teachers = teacherRepository.findAll();
-        for (int i = 0; i < teachers.size(); i++) {
-            if(teachers.get(i).getFirstName().equals(name)&&teachers.get(i).getLastName().equals(lastName) && teachers.get(i).getPass().equals(pass))
-            {
-                request.getSession().setAttribute("loggedTeacher", teachers.get(i));
+        for (Teacher teacher : teachers) {
+            if (teacher.getFirstName().equals(name) && teacher.getLastName().equals(lastName) && teacher.getPass().equals(pass)) {
+                request.getSession().setAttribute("loggedTeacher", teacher);
                 return "redirect:/logged";
             }
         }

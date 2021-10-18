@@ -76,9 +76,18 @@
                 </ol>
             </c:if>
             <c:if test="${empty currentGroup && not empty currentCourse}">
-                <li><a href="/logged/coursestochoose">Wybierz przedmiot</a></li>
-                <li><a href="/logged/grouptochoose">Wybierz klasę</a></li>
-                <li><a href="/logged">Wybierz ucznia</a></li>
+                <ol>
+                    <li><a href="/logged/coursestochoose">Zmień przedmiot</a></li>
+                    <li><a href="/logged/grouptochoose">Wybierz klasę</a></li>
+                    <li><a href="/logged">Wybierz ucznia</a></li>
+                </ol>
+            </c:if>
+            <c:if test="${not empty currentGroup && not empty currentCourse}">
+                <ol>
+                    <li><a href="/logged/coursestochoose">Zmień przedmiot</a></li>
+                    <li><a href="/logged/grouptochoose">Zmień klasę</a></li>
+                    <li><a href="/logged">Wybierz ucznia</a></li>
+                </ol>
             </c:if>
         </div>
     </section><!-- End Breadcrumbs -->
@@ -134,7 +143,7 @@
                                     <div class="col-lg-6 mt-5 mt-lg-0 d-flex">
                                         <div class="row align-self-center gy-4">
                                             <c:if test="${courseGroups.size() == 0}">
-                                                Nie prowadzisz przedmiotu ${currentCourse.name} w żadnej klasie
+                                                Przedmiot ${currentCourse.name} nie jest prowadzony w żadnej klasie
                                                 <a href="/logged/groupstobook">Dodaj klasę do przedmiotu</a>
                                             </c:if>
                                             <c:if test="${courseGroups.size() != 0}">

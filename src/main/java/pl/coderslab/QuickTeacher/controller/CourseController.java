@@ -83,7 +83,7 @@ public class CourseController {
     {
         Optional<Course> optionalCourse = courseRepository.findById(id);
         optionalCourse.ifPresent(course -> session.setAttribute("currentCourse", course));
-        //wynullować currentGroup !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1one
+        session.removeAttribute("CurrentGroup");
         return "redirect:/logged";
     }
     @RequestMapping("/coursestochoose")

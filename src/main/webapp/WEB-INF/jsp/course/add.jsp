@@ -92,7 +92,7 @@
                                             </a>
                                         </div>
                                     </c:forEach>
-                                    <a href="/logged/createcourse">Stwórz nowy przedmiot</a>
+                                    <a href="/logged/creategroup">Stwórz nowy przedmiot</a>
                                 </c:if>
                             </div>
                         </div>

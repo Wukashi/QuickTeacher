@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pl.coderslab.QuickTeacher.entity.Course;
@@ -30,7 +31,7 @@ public class GroupController {
     public String showTeachersGroup(HttpServletRequest request, Model model)
     {
         Teacher currentTeacher = (Teacher) request.getSession().getAttribute("loggedTeacher");
-        Course currentCourse = (Course) request.getSession().getAttribute("currentcourse");
+        Course currentCourse = (Course) request.getSession().getAttribute("currentCourse");
         List<Group> teachersCourseGroups = groupRepository.findByTeachersAndCourses(currentTeacher, currentCourse);
         model.addAttribute("avilablegroups", teachersCourseGroups);
         model.addAttribute("coursename", currentCourse.getName());
@@ -44,16 +45,16 @@ public class GroupController {
         return "group/all";
     }
     @GetMapping("/creategroup")
-    String prepareGroup(Model model)
+    String prepareGroup(Model model, HttpSession session)
     {
         model.addAttribute("group", new Group());
-        return "group/add";
+        return "group/create";
     }
     @PostMapping("/creategroup")
     String addGroup(@Valid Group group, BindingResult result)
     {
         if(result.hasErrors())
-            return "group/add";
+            return "group/create";
         groupRepository.save(group);
         return "redirect:/logged/allgroups";
     }
@@ -61,10 +62,10 @@ public class GroupController {
     String bookAvilableGroup(HttpServletRequest request, Model model)
     {
         List<Group> groups = groupRepository.findAll();
-        Course course = (Course) request.getSession().getAttribute("currentcourse");
+        Course course = (Course) request.getSession().getAttribute("currentCourse");
         for (int i = groups.size() - 1; i >= 0; i--) {
-            for (int j = 0; j < groups.get(i).getCourses().size(); j++) {
-                if(groups.get(i).getCourses().get(j).equals(course))
+            for (int j = 0; j < course.getGroups().size(); j++) {
+                if(groups.get(i).getName().equalsIgnoreCase((course.getGroups().get(j).getName())))
                 {
                     groups.remove(i);
                     break;
@@ -87,8 +88,15 @@ public class GroupController {
     @RequestMapping("/grouptochoose")
     public String chooseCurrentGroupToTeach(HttpSession session, Model model)
     {
-
+        Course course = (Course) session.getAttribute("currentCourse");
+        model.addAttribute("courseGroups", course.getGroups());
         return "group/choose";
     }
-
+    @RequestMapping("/currentgroup/{groupId}")
+    public String setCurrentGroup(@PathVariable Long groupId, HttpSession session)
+    {
+        Group group = groupRepository.getById(groupId);
+        session.setAttribute("currentGroup", group);
+        return "redirect:/logged";
+    }
 }

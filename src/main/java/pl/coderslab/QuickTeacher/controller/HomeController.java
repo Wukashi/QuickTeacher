@@ -41,6 +41,9 @@ public class HomeController {
 		{
 			model.addAttribute("currentCourse", course);
 			model.addAttribute("courseGroups", course.getGroups());
+			Group group = (Group) session.getAttribute("currentGroup");
+			if(group != null)
+				model.addAttribute("currentGroup");
 		}
 		return "logged";
 	}
