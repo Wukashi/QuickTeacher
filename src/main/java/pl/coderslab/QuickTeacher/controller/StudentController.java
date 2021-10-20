@@ -39,24 +39,38 @@ public class StudentController {
     public String prepareStudent(Model model)
     {
         model.addAttribute("student", new Student());
-        return "student/add";
+        return "student/create";
     }
     @PostMapping("/createstudent")
-    public String addStudent(@Valid Student student, BindingResult result, Model model)
+    public String addStudent(@Valid Student student, BindingResult result)
     {
         if(result.hasErrors())
-            return "teacher/register";
+            return "student/create";
+        List<Student> students = studentRepository.findAll();
+        for (Student value : students) {
+            if (student.getName().equalsIgnoreCase(value.getName()))
+                return "redirect:/logged/allstudents";
+        }
         studentRepository.save(student);
-        return "redirect:/logged/allstudents";
+        return "redirect:/logged/studentswithoutgroup";
     }
     @RequestMapping("/studentswithoutgroup")
-    public String addStudentToGroup(Model model, HttpSession session)
-    {
+    public String addStudentToGroup(Model model, HttpSession session) {
         List<Student> students = studentRepository.getAllByGroup(null);
-        model.addAttribute("avilableStudents",students);
+        model.addAttribute("avilableStudents", students);
         Group group = (Group) session.getAttribute("currentGroup");
         group = groupRepository.getById(group.getId());
-        model.addAttribute("cGroup",group);
+        model.addAttribute("cGroup", group);
         return "student/add";
+    }
+    @RequestMapping("/addstudenttogroup/{studentId}")
+    public String addStudentTogroup(@PathVariable Long studentId, HttpSession session)
+    {
+        Student student = studentRepository.getById(studentId);
+        Group group = (Group) session.getAttribute("currentGroup");
+        group = groupRepository.getById(group.getId());
+        student.setGroup(group);
+        studentRepository.save(student);
+        return "redirect:/logged";
     }
 }

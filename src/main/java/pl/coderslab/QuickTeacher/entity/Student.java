@@ -2,6 +2,7 @@ package pl.coderslab.QuickTeacher.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -11,6 +12,7 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank
+    @Size(min = 2)
     private String name;
     @ManyToOne
     Group group;
