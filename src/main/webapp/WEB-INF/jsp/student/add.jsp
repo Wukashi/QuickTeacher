@@ -73,26 +73,26 @@
                 <div class="container" data-aos="fade-up">
 
                     <header class="section-header">
-                        <p>Dodaj klasę do przedmiotu ${currentCourse.name}</p>
+                        <p>Dodaj ucznia do klasy ${cGroup.name}</p>
                     </header>
 
                     <div class="row">
 
                         <div class="col-lg-6 mt-5 mt-lg-0 d-flex">
                             <div class="row align-self-center gy-4">
-                                <c:if test="${avilableGroups.size() == 0}">
-                                    Brak klas do dodania do przedmiotu ${currentCourse.name}<br>
-                                    <a href="/logged/creategroup">Stwórz nową klasę</a>
+                                <c:if test="${avilableStudents.size() == 0}">
+                                    Brak uczniów do dodania do klasy ${cGroup.name}
+                                    <a href="/logged/createstudent">Stwórz ucznia</a>
                                 </c:if>
-                                <c:if test="${avilableGroups.size() != 0}">
-                                    <c:forEach var = "group" items="${avilableGroups}">
+                                <c:if test="${avilableStudents.size() != 0}">
+                                    <c:forEach var = "student" items="${avilableStudents}">
                                         <div class="col-md-6" data-aos="zoom-out" data-aos-delay="700">
-                                            <a href="/logged/addgrouptocourse/${group.id}">
-                                                <h3>${group.name}</h3>
+                                            <a href="/logged/addstudenttogroup/${student.id}">
+                                                <h3>${student.name}</h3>
                                             </a>
                                         </div>
                                     </c:forEach>
-                                    <a href="/logged/creategroup">Stwórz nową klasę</a>
+                                    <a href="/logged/createstudent">Stwórz ucznia</a>
                                 </c:if>
                             </div>
                         </div>

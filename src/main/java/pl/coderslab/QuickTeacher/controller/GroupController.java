@@ -55,6 +55,11 @@ public class GroupController {
     {
         if(result.hasErrors())
             return "group/create";
+        List<Group> groups = groupRepository.findAll();
+        for (int i = 0; i < groups.size(); i++) {
+            if(group.getName().equalsIgnoreCase(groups.get(i).getName()))
+                return "redirect:/logged/allgroups";
+        }
         groupRepository.save(group);
         return "redirect:/logged/allgroups";
     }

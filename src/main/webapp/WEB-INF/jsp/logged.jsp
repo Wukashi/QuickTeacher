@@ -162,6 +162,39 @@
                                     </div>
                                 </div> <!-- / row -->
                                 </c:if>
+                                 <c:if test="${not empty currentGroup && not empty currentCourse}">
+                                  <section id="features" class="features">
+
+                                      <div class="container" data-aos="fade-up">
+
+                                          <header class="section-header">
+                                              <p>Wybiesz ucznia</p>
+                                          </header>
+
+                                          <div class="row">
+
+                                              <div class="col-lg-6 mt-5 mt-lg-0 d-flex">
+                                                  <div class="row align-self-center gy-4">
+                                                      <c:if test="${groupsStudents.size() == 0}">
+                                                          W klasie ${currentGroup.name} nie ma jeszcze zapisanych uczów
+                                                        <a href="/logged/studentswithoutgroup">Zapisz ucznia do klasy</a>
+                                                    </c:if>
+                                                    <c:if test="${groupsStudents.size() != 0}">
+                                                        <c:forEach var = "student" items="${groupsStudents}">
+                                                            <div class="col-md-6" data-aos="zoom-out" data-aos-delay="700">
+                                                                <div class="feature-box d-flex align-items-center">
+                                                                    <a href="/logged}">
+                                                                        <h3>${student.name}</h3>
+                                                                    </a></li>
+                                                                </div>
+                                                            </div>
+                                                        </c:forEach>
+                                                        <a href="/logged/studentswithoutgroup">Zapisz ucznia do klasy</a>
+                                                    </c:if>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </c:if>
         </div>
     </section>
 

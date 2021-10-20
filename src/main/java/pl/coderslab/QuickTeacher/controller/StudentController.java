@@ -9,8 +9,10 @@ import pl.coderslab.QuickTeacher.entity.Student;
 import pl.coderslab.QuickTeacher.repository.GroupRepository;
 import pl.coderslab.QuickTeacher.repository.StudentRepository;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.List;
 
 @Controller
 @RequestMapping("/logged")
@@ -33,13 +35,13 @@ public class StudentController {
         model.addAttribute("allStudents", studentRepository.findAll());
         return "student/all";
     }
-    @GetMapping("/addstudent")
+    @GetMapping("/createstudent")
     public String prepareStudent(Model model)
     {
         model.addAttribute("student", new Student());
         return "student/add";
     }
-    @PostMapping("/addstudent")
+    @PostMapping("/createstudent")
     public String addStudent(@Valid Student student, BindingResult result, Model model)
     {
         if(result.hasErrors())
@@ -47,11 +49,14 @@ public class StudentController {
         studentRepository.save(student);
         return "redirect:/logged/allstudents";
     }
-    @RequestMapping("/classstudents/{groupId}")
-    public String showStudentsInGroup(@PathVariable Long groupId, Model model)
+    @RequestMapping("/studentswithoutgroup")
+    public String addStudentToGroup(Model model, HttpSession session)
     {
-        model.addAttribute("studentsingroup", studentRepository.findAllByGroup_Id(groupId));
-        model.addAttribute("group", groupRepository.findById(groupId).get());
-        return "student/groupstudents";
+        List<Student> students = studentRepository.getAllByGroup(null);
+        model.addAttribute("avilableStudents",students);
+        Group group = (Group) session.getAttribute("currentGroup");
+        group = groupRepository.getById(group.getId());
+        model.addAttribute("cGroup",group);
+        return "student/add";
     }
 }

@@ -1,6 +1,9 @@
 package pl.coderslab.QuickTeacher.entity;
 
+import org.springframework.data.repository.cdi.Eager;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
