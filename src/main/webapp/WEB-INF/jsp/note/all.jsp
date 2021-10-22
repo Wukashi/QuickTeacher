@@ -84,12 +84,15 @@
                                     Brak notatek<br>
                                 </c:if>
                                 <c:if test="${currentTeacheNotes.size() != 0}">
-                                    <c:forEach var = "note" items="${currentTeacheNotes}">
+                                    <c:forEach var = "i" begin="0" end="${currentTeacheNotes.size() - 1}">
                                         <div class="col-md-6" data-aos="zoom-out" data-aos-delay="700">
                                             <div class="feature-box d-flex align-items-center">
                                                 <h3>
-                                                    Komentarz: ${note.comment}<br/>
-                                                    Ocena: ${note.grade}
+                                                    Data:${currentTeacheNotes[i].date} <br/>
+                                                    Data:${currentTeacheNotes[i].time} <br/>
+                                                    Ocena: ${currentTeacheNotes[i].grade}<br/>
+                                                    Student: ${students[i].name}<br/><br/>
+                                                    Komentarz:<br/> ${currentTeacheNotes[i].comment}<br/>
                                                 </h3>
                                             </div>
                                         </div>

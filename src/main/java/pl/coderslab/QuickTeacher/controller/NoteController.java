@@ -67,6 +67,7 @@ public class NoteController {
         note.setCourse(currentCourse);
         note.setDate(LocalDate.now());
         note.setTime(LocalTime.now());
+        note.setStudent(studentRepository.getById(studentId));
         noteRepository.save(note);
         Student currentStudent = studentRepository.getById(studentId);
         List<Note> studentsNotes = currentStudent.getNotes();
@@ -88,6 +89,11 @@ public class NoteController {
         currentTeacher = teacherRepository.getById(currentTeacher.getId());
         List<Note> currentTeacheNotes = currentTeacher.getNotes();
         model.addAttribute("currentTeacheNotes", currentTeacheNotes);
+        List<Student> students = new ArrayList<>();
+        for (Note currentTeacheNote : currentTeacheNotes) {
+            students.add(studentRepository.getById(currentTeacheNote.getStudent().getId()));
+        }
+        model.addAttribute("students", students);
         return "note/all";
     }
 }

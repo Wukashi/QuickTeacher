@@ -22,6 +22,8 @@ public class Note {
     private LocalTime time;
     @ManyToOne
     Course course;
+    @ManyToOne
+    Student student;
 
     public Long getId() {
         return id;
@@ -74,6 +76,15 @@ public class Note {
 
     public Note setCourse(Course course) {
         this.course = course;
+        return this;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public Note setStudent(Student student) {
+        this.student = student;
         return this;
     }
 }
