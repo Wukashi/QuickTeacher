@@ -29,7 +29,7 @@ public class TeacherController {
         session.removeAttribute("loggedTeacher");
         session.removeAttribute("currentCourse");
         session.removeAttribute("currentGroup");
-
+        session.removeAttribute("currentStudent");
         return "redirect:/";
     }
 

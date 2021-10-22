@@ -16,7 +16,7 @@ public class Student {
     private String name;
     @ManyToOne
     Group group;
-    @ManyToMany
+    @OneToMany
     List<Note> notes;
 
     public List<Note> getNotes() {

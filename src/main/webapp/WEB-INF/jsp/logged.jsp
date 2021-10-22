@@ -183,7 +183,7 @@
                                                         <c:forEach var = "student" items="${groupsStudents}">
                                                             <div class="col-md-6" data-aos="zoom-out" data-aos-delay="700">
                                                                 <div class="feature-box d-flex align-items-center">
-                                                                    <a href="/logged}">
+                                                                    <a href="/logged/createnote/${student.id}">
                                                                         <h3>${student.name}</h3>
                                                                     </a></li>
                                                                 </div>

@@ -1,6 +1,7 @@
 package pl.coderslab.QuickTeacher.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -83,7 +84,8 @@ public class CourseController {
     {
         Optional<Course> optionalCourse = courseRepository.findById(id);
         optionalCourse.ifPresent(course -> session.setAttribute("currentCourse", course));
-        session.removeAttribute("CurrentGroup");
+        session.removeAttribute("currentGroup");
+        session.removeAttribute("currentStudent");
         return "redirect:/logged";
     }
     @RequestMapping("/coursestochoose")

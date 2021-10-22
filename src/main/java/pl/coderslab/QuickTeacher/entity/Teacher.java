@@ -27,6 +27,9 @@ public class Teacher {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Course> courses;
 
+    @OneToMany
+    private List<Note> notes;
+
     public Long getId() {
         return id;
     }
@@ -78,6 +81,15 @@ public class Teacher {
 
     public Teacher setCourses(List<Course> courses) {
         this.courses = courses;
+        return this;
+    }
+
+    public List<Note> getNotes() {
+        return notes;
+    }
+
+    public Teacher setNotes(List<Note> notes) {
+        this.notes = notes;
         return this;
     }
 }

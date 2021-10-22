@@ -102,6 +102,7 @@ public class GroupController {
     {
         Group group = groupRepository.getById(groupId);
         session.setAttribute("currentGroup", group);
+        session.removeAttribute("currentStudent");
         return "redirect:/logged";
     }
 }
