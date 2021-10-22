@@ -51,6 +51,7 @@
 
         <nav id="navbar" class="navbar">
             <ul>
+                <li><a class="nav-link scrollto" href="/logged/allnotes">Twoje notatki</a></li>
                 <li><a class="nav-link scrollto" href="/logged/allcourses">Przedmioty</a></li>
                 <li><a class="nav-link scrollto" href="/logged/showgroupstochoose">Klasy</a></li>
                 <li><a class="nav-link scrollto" href="/logged/allstudents">Uczniowie</a></li>
@@ -119,6 +120,7 @@
                                                     <a href="/logged/choosecurrentcourse/${course.id}">
                                                         <h3>${course.name}</h3>
                                                     </a>
+                                                    usuń
                                                 </div>
                                             </div>
                                         </c:forEach>

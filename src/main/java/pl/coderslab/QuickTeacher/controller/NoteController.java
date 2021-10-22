@@ -73,12 +73,21 @@ public class NoteController {
         studentsNotes.add(note);
         currentStudent.setNotes(studentsNotes);
         studentRepository.save(currentStudent);
-        Teacher currentTeacher = (Teacher) session.getAttribute("currentTeacher");
+        Teacher currentTeacher = (Teacher) session.getAttribute("loggedTeacher");
         currentTeacher = teacherRepository.getById(currentTeacher.getId());
         List<Note> teachersNotes = currentTeacher.getNotes();
         teachersNotes.add(note);
         currentTeacher.setNotes(teachersNotes);
         teacherRepository.save(currentTeacher);
         return "redirect:/logged";
+    }
+    @RequestMapping("/allnotes")
+    public String showAllCurrentTeacherNotes(HttpSession session, Model model)
+    {
+        Teacher currentTeacher = (Teacher) session.getAttribute("loggedTeacher");
+        currentTeacher = teacherRepository.getById(currentTeacher.getId());
+        List<Note> currentTeacheNotes = currentTeacher.getNotes();
+        model.addAttribute("currentTeacheNotes", currentTeacheNotes);
+        return "note/all";
     }
 }
